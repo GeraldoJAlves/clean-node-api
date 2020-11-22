@@ -7,7 +7,6 @@ Implementando uma arquitetura limpa com node
 - [x] Node.js
 - [x] Typescript
 - [x] Jest
-- [x] EsLint
 
 ## Starting Dev Environment
 
