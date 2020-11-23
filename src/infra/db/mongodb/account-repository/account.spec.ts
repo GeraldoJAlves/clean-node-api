@@ -13,6 +13,11 @@ describe('Account Mongo Repository', () => {
     if (uriMongo) { await MongoHelper.connect(uriMongo) }
   })
 
+  beforeEach(async () => {
+    const accountCollection = MongoHelper.getCollection('account')
+    await accountCollection.deleteMany({})
+  })
+
   afterAll(async () => {
     await MongoHelper.disconnect()
   })
