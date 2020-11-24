@@ -3,7 +3,7 @@ import app from '../config/app'
 import { MongoHelper } from '../../infra/db/mongodb/helpers/mongo-helper'
 
 describe('SignUp Routes', () => {
-  const uriMongo: string = process.env.MONGO_URL ? process.env.MONGO_URL : ''
+  const uriMongo: string = process.env.MONGO_URL ?? ''
 
   beforeAll(async () => {
     if (uriMongo) { await MongoHelper.connect(uriMongo) }
