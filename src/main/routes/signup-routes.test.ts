@@ -23,7 +23,7 @@ describe('SignUp Routes', () => {
       .post('/api/v1/signup')
       .send({
         name: 'any_name',
-        email: 'any_email',
+        email: 'any_email@mail.com',
         password: 'any_password',
         passwordConfirm: 'any_password'
       })
