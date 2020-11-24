@@ -9,10 +9,10 @@ export const MongoHelper = {
     })
   },
   async disconnect (): Promise<void> {
-    if (this.client) { await this.client.close() }
+    await this.client?.close()
   },
   getCollection (name: string): Collection {
-    return this.client.db().collection(name)
+    return this.client?.db().collection(name)
   },
   map (collection: any): any {
     const { _id, ...collectionWithoutId } = collection
