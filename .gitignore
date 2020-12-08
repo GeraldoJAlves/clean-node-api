@@ -1,4 +1,5 @@
 node_modules/
 dist/
 coverage/
+docker-volume/
 globalConfig.json
