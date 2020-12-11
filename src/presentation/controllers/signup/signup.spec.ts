@@ -1,5 +1,5 @@
 import { SignUpController } from './signup'
-import { MissingParamError, InvalidParamError, ServerError } from '../../errors'
+import { InvalidParamError, ServerError } from '../../errors'
 import { HttpRequest } from '../../protocols'
 import { badRequest, created, serverError } from '../../helpers/http-helper'
 import {
@@ -75,58 +75,6 @@ const makeSut = (): SutTypes => {
 }
 
 describe('Signup Controller', () => {
-  test('Should return 400 if no name is provided', async () => {
-    const { sut } = makeSut()
-    const httpRequest = {
-      body: {
-        email: 'email@email.com',
-        password: 'any_password',
-        passwordConfirm: 'any_password'
-      }
-    }
-    const httpResponse = await sut.handle(httpRequest)
-    expect(httpResponse).toEqual(badRequest(new MissingParamError('name')))
-  })
-
-  test('Should return 400 if no email is provided', async () => {
-    const { sut } = makeSut()
-    const httpRequest = {
-      body: {
-        name: 'any_name',
-        password: 'any_password',
-        passwordConfirm: 'any_password'
-      }
-    }
-    const httpResponse = await sut.handle(httpRequest)
-    expect(httpResponse).toEqual(badRequest(new MissingParamError('email')))
-  })
-
-  test('Should return 400 if no password is provided', async () => {
-    const { sut } = makeSut()
-    const httpRequest = {
-      body: {
-        name: 'any_name',
-        email: 'email@email.com',
-        passwordConfirm: 'any_password'
-      }
-    }
-    const httpResponse = await sut.handle(httpRequest)
-    expect(httpResponse).toEqual(badRequest(new MissingParamError('password')))
-  })
-
-  test('Should return 400 if no password confirmation is provided', async () => {
-    const { sut } = makeSut()
-    const httpRequest = {
-      body: {
-        name: 'any_name',
-        email: 'email@email.com',
-        password: 'any_password'
-      }
-    }
-    const httpResponse = await sut.handle(httpRequest)
-    expect(httpResponse).toEqual(badRequest(new MissingParamError('passwordConfirm')))
-  })
-
   test('Should return 400 if no password confirmation fails', async () => {
     const { sut } = makeSut()
     const httpRequest = {
