@@ -1,5 +1,4 @@
 export { HttpRequest, HttpResponse, Controller } from '../../protocols'
-export { EmailValidator } from '../../protocols/email-validator'
-export { Validation } from '../../helpers/validators/validation'
+export { Validation } from '../../helpers/validators'
 export { AddAccount, AddAccountModel } from '../../../domain/usecases/add-account'
 export { AccountModel } from '../../../domain/models/account'
