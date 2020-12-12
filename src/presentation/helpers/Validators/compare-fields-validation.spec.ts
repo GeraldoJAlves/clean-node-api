@@ -22,6 +22,6 @@ describe('CompareFields Validation', () => {
   test('Should not return if validation succeeds', () => {
     const { sut } = makeSut()
     const error = sut.validate({ password: '123', passwordConfirm: '123' })
-    expect(error).toBe(null)
+    expect(error).toBeFalsy()
   })
 })
