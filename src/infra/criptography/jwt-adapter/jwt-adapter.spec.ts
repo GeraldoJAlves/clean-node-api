@@ -23,9 +23,16 @@ describe('Jwt Adapter', () => {
     expect(hashSpy).toHaveBeenCalledWith(makeFakeHash(), 'secret_key')
   })
 
-  test('Should return a token on jwt.sign succeds ', async () => {
+  test('Should return a token when jwt.sign succeds ', async () => {
     const sut = makeSut()
     const accessToken = await sut.encrypt(makeFakeHash())
     expect(accessToken).toBe('any_token')
+  })
+
+  test('Should throw if jwt.sign throws', async () => {
+    const sut = makeSut()
+    jest.spyOn(jwt, 'sign').mockImplementationOnce(() => { throw new Error() })
+    const promise = sut.encrypt(makeFakeHash())
+    await expect(promise).rejects.toThrow()
   })
 })
