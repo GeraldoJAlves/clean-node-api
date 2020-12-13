@@ -13,7 +13,10 @@ export class DbAuthentication implements Authentication {
     if (!account) {
       return null as unknown as string
     }
-    await this.hashComparer.compare(authentication.password, account.password)
+    const isCorrect = await this.hashComparer.compare(authentication.password, account.password)
+    if (!isCorrect) {
+      return null as unknown as string
+    }
     return null as unknown as string
   }
 }
