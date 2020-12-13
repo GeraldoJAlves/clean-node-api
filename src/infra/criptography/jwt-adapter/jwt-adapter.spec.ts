@@ -3,7 +3,7 @@ import { JwtAdapter } from './jwt-adapter'
 
 jest.mock('jsonwebtoken', () => ({
   async sign (paylaod: string, secret: string): Promise<string> {
-    return await Promise.resolve('any_hash')
+    return await Promise.resolve('any_token')
   }
 }))
 
@@ -21,5 +21,11 @@ describe('Jwt Adapter', () => {
     const sut = makeSut()
     await sut.encrypt(makeFakeHash())
     expect(hashSpy).toHaveBeenCalledWith(makeFakeHash(), 'secret_key')
+  })
+
+  test('Should return a token on jwt.sign succeds ', async () => {
+    const sut = makeSut()
+    const accessToken = await sut.encrypt(makeFakeHash())
+    expect(accessToken).toBe('any_token')
   })
 })
