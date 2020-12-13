@@ -1,6 +1,6 @@
-import { AccountModel } from '../../../domain/models/account'
 import { DbAuthentication } from './db-authentication'
 import {
+  AccountModel,
   AuthenticationModel,
   HashComparer,
   TokenGenerator,
