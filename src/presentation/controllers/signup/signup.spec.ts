@@ -1,7 +1,7 @@
 import { SignUpController } from './signup'
 import { ServerError } from '../../errors'
 import { HttpRequest } from '../../protocols'
-import { badRequest, created, serverError } from '../../helpers/http-helper'
+import { badRequest, created, serverError } from '../../helpers/http/http-helper'
 import {
   AddAccount,
   AddAccountModel,
