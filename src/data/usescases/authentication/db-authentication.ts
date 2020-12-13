@@ -18,8 +18,8 @@ export class DbAuthentication implements Authentication {
     if (!account) {
       return null as unknown as string
     }
-    const isCorrect = await this.hashComparer.compare(authentication.password, account.password)
-    if (!isCorrect) {
+    const isCorrectPassword = await this.hashComparer.compare(authentication.password, account.password)
+    if (!isCorrectPassword) {
       return null as unknown as string
     }
     const accessToken = await this.tokenGenerator.generate(account.id)
