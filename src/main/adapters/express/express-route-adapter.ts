@@ -1,5 +1,5 @@
 import { Request, RequestHandler, Response } from 'express'
-import { Controller, HttpRequest } from '../../presentation/protocols'
+import { Controller, HttpRequest } from '../../../presentation/protocols'
 
 export const expressRouteAdapter = (controller: Controller): RequestHandler => {
   return async (req: Request, res: Response) => {
@@ -7,7 +7,7 @@ export const expressRouteAdapter = (controller: Controller): RequestHandler => {
       body: req.body
     }
     const { statusCode, body } = await controller.handle(httpRequest)
-    if (statusCode === 500) {
+    if (statusCode === 500 || statusCode === 400) {
       res.status(statusCode).json({
         error: body.message
       })
