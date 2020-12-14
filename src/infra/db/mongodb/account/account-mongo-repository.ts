@@ -1,4 +1,4 @@
-import { LoadAccountByEmailRepository, UpdateAccessTokenRepository } from '../../../../data/protocols/db'
+import { LoadAccountByEmailRepository, UpdateAccessTokenRepository } from '../../../../data/protocols/db/account'
 import { AccountModel } from '../../../../domain/models/account'
 import { AddAccount, AddAccountModel } from '../../../../domain/usecases/add-account'
 import { MongoHelper } from '../helpers/mongo-helper'
