@@ -62,5 +62,21 @@ describe('Login Routes', () => {
         })
         .expect(200)
     })
+
+    test('Should return 401 with invalid credentials', async () => {
+      const password = await hash('any_password', 12)
+      await accountCollection.insertOne({
+        name: 'any_name',
+        email: 'any_email@mail.com',
+        password
+      })
+      await request(app)
+        .post('/api/v1/login')
+        .send({
+          email: 'any_email@mail.com',
+          password: 'wrong_password'
+        })
+        .expect(401)
+    })
   })
 })
