@@ -3,3 +3,4 @@ dist/
 coverage/
 volume/**
 globalConfig.json
+.vscode/
