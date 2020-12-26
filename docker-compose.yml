@@ -3,9 +3,7 @@ version: '3'
 services:
   mongo:
     image: mongo:3.6
-    # environment:
-    #   MONGO_INITDB_ROOT_USERNAME: root
-    #   MONGO_INITDB_ROOT_PASSWORD: MongoDB2019!
+    restart: always
     ports:
       - "27017:27017"
     volumes:
@@ -14,12 +12,13 @@ services:
       - clean-api-network
   node:
     image: node:12
+    restart: always
     working_dir: /usr/src/app
     ports: 
       - "5050:5050"
     volumes:
       - ./dist:/usr/src/app/dist/
-      - ./volume/node:/usr/src/app/node_modules/
+      - ./volume/node/:/usr/src/app/
       - ./package.json:/usr/src/app/package.json
     links:
       - "mongo"
