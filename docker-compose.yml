@@ -14,16 +14,18 @@ services:
       - clean-api-network
   node:
     image: node:12
+    working_dir: /usr/src/app
     ports: 
       - "5050:5050"
     volumes:
-      - ./:/usr/src/clean-node-api
-    working_dir: /usr/src/clean-node-api
-    command: "npm run docker"
+      - ./dist:/usr/src/app/dist/
+      - ./volume/node:/usr/src/app/node_modules/
+      - ./package.json:/usr/src/app/package.json
     links:
       - "mongo"
     networks:
       - clean-api-network
+    command: "npm run docker"
 networks: 
     clean-api-network:
       driver: bridge

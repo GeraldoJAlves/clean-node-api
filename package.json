@@ -34,7 +34,7 @@
   "scripts": {
     "start": "node ./dist/main/server.js",
     "build": "rimraf dist && tsc",
-    "docker": "npm install && npm start",
+    "docker": "npm install --only=prod && npm start",
     "dev": "sucrase-node ./src/main/server.ts",
     "test": "jest --passWithNoTests --silent --noStackTrace --runInBand --no-cache",
     "test:verbose": "jest --passWithNoTests --runInBand --no-cache",
