@@ -9,7 +9,7 @@ services:
     ports:
       - "27017:27017"
     volumes:
-      - ./docker-volume/:/data/db
+      - ./volume/mongo/:/data/db
     networks:
       - mongo-compose-network
 networks: 
