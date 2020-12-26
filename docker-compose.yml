@@ -25,7 +25,7 @@ services:
       - "mongo"
     networks:
       - clean-api-network
-    command: "npm run docker"
+    command: bash -c "npm install --only=prod && npm run debug"
 networks: 
     clean-api-network:
       driver: bridge
