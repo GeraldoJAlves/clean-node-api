@@ -34,6 +34,7 @@
   "scripts": {
     "start": "node ./dist/main/server.js",
     "build": "rimraf dist && tsc",
+    "docker": "npm install && npm start",
     "dev": "sucrase-node ./src/main/server.ts",
     "test": "jest --passWithNoTests --silent --noStackTrace --runInBand --no-cache",
     "test:verbose": "jest --passWithNoTests --runInBand --no-cache",
@@ -48,5 +49,8 @@
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^3.6.3",
     "validator": "^13.1.17"
+  },
+  "engines": {
+    "node": "12.x"
   }
 }

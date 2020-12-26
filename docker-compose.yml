@@ -11,7 +11,19 @@ services:
     volumes:
       - ./volume/mongo/:/data/db
     networks:
-      - mongo-compose-network
+      - clean-api-network
+  node:
+    image: node:12
+    ports: 
+      - "5050:5050"
+    volumes:
+      - ./:/usr/src/clean-node-api
+    working_dir: /usr/src/clean-node-api
+    command: "npm run docker"
+    links:
+      - "mongo"
+    networks:
+      - clean-api-network
 networks: 
-    mongo-compose-network:
+    clean-api-network:
       driver: bridge
