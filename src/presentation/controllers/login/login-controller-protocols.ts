@@ -1,3 +1,2 @@
-export { HttpRequest, HttpResponse, Controller } from '../../protocols'
+export { HttpRequest, HttpResponse, Controller, Validation } from '../../protocols'
 export { Authentication } from '../../../domain/usecases/authentication'
-export { Validation } from '../../protocols/validation'
