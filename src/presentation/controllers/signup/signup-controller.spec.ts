@@ -1,7 +1,7 @@
 import { SignUpController } from './signup-controller'
 import { ServerError } from '../../errors'
 import { HttpRequest } from '../../protocols'
-import { badRequest, created, serverError } from '../../helpers/http/http-helper'
+import { badRequest, ok, serverError } from '../../helpers/http/http-helper'
 import {
   AddAccount,
   AddAccountModel,
@@ -40,7 +40,7 @@ const makeFakeAccount = (): AccountModel => ({
 const makeAuthentication = (): Authentication => {
   class AuthenticationStub implements Authentication {
     async auth (authentication: AuthenticationModel): Promise<string> {
-      return await Promise.resolve('token_access')
+      return await Promise.resolve('any_token')
     }
   }
 
@@ -113,10 +113,10 @@ describe('Signup Controller', () => {
     expect(httpResponse).toEqual(serverError(new ServerError('')))
   })
 
-  test('Should return 201 if valid data is provided', async () => {
+  test('Should return an accessToken on success', async () => {
     const { sut } = makeSut()
     const httpResponse = await sut.handle(makeFakeRequest())
-    expect(httpResponse).toEqual(created(makeFakeAccount()))
+    expect(httpResponse).toEqual(ok({ accessToken: 'any_token' }))
   })
 
   test('Should call Validation with correct value', async () => {
