@@ -10,6 +10,6 @@ export class ValidationComposite implements Validation {
         return error
       }
     }
-    return null as unknown as Error
+    return null
   }
 }
