@@ -31,7 +31,7 @@ describe('Login Routes', () => {
           password: 'any_password',
           passwordConfirm: 'any_password'
         })
-        .expect(201)
+        .expect(200)
     })
 
     test('Should return 400 on signup ', async () => {
