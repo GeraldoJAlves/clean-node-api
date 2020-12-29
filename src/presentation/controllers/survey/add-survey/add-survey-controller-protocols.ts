@@ -1,2 +1,2 @@
 export { Controller, HttpRequest, HttpResponse, Validation } from '../../../protocols'
-export { badRequest } from '../../../helpers/http/http-helper'
+export { AddSurvey, AddSurveyModel } from '../../../../domain/usecases/add-survey'
