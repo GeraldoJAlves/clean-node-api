@@ -9,5 +9,5 @@ export interface AddSurveyModel {
 
 export interface SurveyAnswer {
   answer: string
-  image: string | null
+  image?: string | null
 }
