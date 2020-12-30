@@ -4,7 +4,7 @@ import { AddSurveyModel, AddSurveyRepository } from './add-survey-protocols'
 
 const makeAddSurveyRepositoryStub = (): AddSurveyRepository => {
   class AddSurveyRepositoryStub implements AddSurveyRepository {
-    async add (addAccount: AddSurveyModel): Promise<void> {
+    async add (data: AddSurveyModel): Promise<void> {
       return await Promise.resolve()
     }
   }
