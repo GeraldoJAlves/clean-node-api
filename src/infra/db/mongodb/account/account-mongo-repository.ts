@@ -1,9 +1,15 @@
-import { LoadAccountByEmailRepository, UpdateAccessTokenRepository } from '../../../../data/protocols/db/account'
+import { LoadAccountByEmailRepository, LoadAccountByTokenRepository, UpdateAccessTokenRepository } from '../../../../data/protocols/db/account'
 import { AccountModel } from '../../../../domain/models/account'
 import { AddAccount, AddAccountModel } from '../../../../domain/usecases/add-account'
 import { MongoHelper } from '../helpers/mongo-helper'
 
-export class AccountMongoRepository implements AddAccount, LoadAccountByEmailRepository, UpdateAccessTokenRepository {
+export class AccountMongoRepository implements AddAccount, LoadAccountByEmailRepository, UpdateAccessTokenRepository, LoadAccountByTokenRepository {
+  async loadByToken (accessToken: string, role?: string): Promise<AccountModel> {
+    const accountCollection = await MongoHelper.getCollection('accounts')
+    const account = await accountCollection.findOne({ accessToken })
+    return MongoHelper.map(account)
+  }
+
   async updateAccessToken (id: string, token: string): Promise<void> {
     const accountCollection = await MongoHelper.getCollection('accounts')
     await accountCollection.updateOne({ _id: id }, { $set: { accessToken: token } })
