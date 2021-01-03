@@ -35,7 +35,7 @@ const makeFakeSurveyData = (): AddSurveyModel => {
   }
 }
 
-describe('DbAddSurvey Usecase', () => {
+describe('DbAddSurvey usecases', () => {
   test('Should call AddSurveyRepository with correct values', async () => {
     const { sut, addSurveyRepositoryStub } = makeSut()
     const addSpy = jest.spyOn(addSurveyRepositoryStub, 'add')
