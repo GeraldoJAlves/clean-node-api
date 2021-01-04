@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.com/GeraldoJAlves/clean-node-api.svg?branch=master)](https://travis-ci.com/GeraldoJAlves/clean-node-api)
+[![Coverage Status](https://coveralls.io/repos/github/GeraldoJAlves/clean-node-api/badge.svg)](https://coveralls.io/github/GeraldoJAlves/clean-node-api)
+
 <h1 align="center">
 Implementando uma arquitetura limpa com node
 </h1>
