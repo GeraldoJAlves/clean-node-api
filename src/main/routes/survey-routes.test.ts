@@ -5,10 +5,35 @@ import app from '../config/app'
 import { sign } from 'jsonwebtoken'
 import env from '../config/env'
 
+let surveyCollection: Collection
+let accountCollection: Collection
+
+const makeAccount = async (role?: string): Promise<string> => {
+  const { ops: [{ _id: id }] } = await accountCollection.insertOne({
+    name: 'any_name',
+    email: 'any_email@mail.com',
+    password: '123',
+    role
+  })
+  return id
+}
+
+const makeAccessToken = async (id: string): Promise<string> => {
+  return sign({ id }, env.jwtSecret)
+}
+
+const updateToken = async (id: string, accessToken: string): Promise<void> => {
+  await accountCollection.updateOne({
+    _id: id
+  }, {
+    $set: {
+      accessToken
+    }
+  })
+}
+
 describe('Surveys Routes', () => {
   const uriMongo: string = process.env.MONGO_URL
-  let surveyCollection: Collection
-  let accountCollection: Collection
 
   beforeAll(async () => {
     if (uriMongo) { await MongoHelper.connect(uriMongo) }
@@ -42,20 +67,10 @@ describe('Surveys Routes', () => {
     })
 
     test('Should return 204 on add survey with valid accessToken', async () => {
-      const { ops: [{ _id: id }] } = await accountCollection.insertOne({
-        name: 'any_name',
-        email: 'any_email@mail.com',
-        password: '123',
-        role: 'admin'
-      })
-      const accessToken = await sign({ id }, env.jwtSecret)
-      await accountCollection.updateOne({
-        _id: id
-      }, {
-        $set: {
-          accessToken
-        }
-      })
+      const id = await makeAccount('admin')
+      const accessToken = await makeAccessToken(id)
+      await updateToken(id, accessToken)
+
       await request(app)
         .post('/api/v1/surveys')
         .set('x-access-token', accessToken)
