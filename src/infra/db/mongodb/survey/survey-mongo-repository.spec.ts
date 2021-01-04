@@ -16,7 +16,8 @@ const makeFakeSurveyData = (): AddSurveyModel => {
       image: 'any_image'
     }, {
       answer: 'other_answer'
-    }]
+    }],
+    date: new Date()
   }
 }
 
