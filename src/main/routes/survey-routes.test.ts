@@ -85,5 +85,25 @@ describe('Surveys Routes', () => {
         })
         .expect(204)
     })
+
+    test('Should return 403 on add survey with invalid accessToken', async () => {
+      const id = await makeAccount('user')
+      const accessToken = await makeAccessToken(id)
+      await updateToken(id, accessToken)
+
+      await request(app)
+        .post('/api/v1/surveys')
+        .set('x-access-token', accessToken)
+        .send({
+          question: 'any_question',
+          answers: [{
+            image: 'any_image',
+            answer: 'any_answer'
+          }, {
+            answer: 'other_answer'
+          }]
+        })
+        .expect(403)
+    })
   })
 })
