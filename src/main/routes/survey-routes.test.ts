@@ -113,5 +113,16 @@ describe('Surveys Routes', () => {
         .get('/api/v1/surveys')
         .expect(403)
     })
+
+    test('Should return 204 on load empty list with valid accessToken', async () => {
+      const id = await makeAccount()
+      const accessToken = await makeAccessToken(id)
+      await updateToken(id, accessToken)
+
+      await request(app)
+        .get('/api/v1/surveys')
+        .set('x-access-token', accessToken)
+        .expect(204)
+    })
   })
 })
