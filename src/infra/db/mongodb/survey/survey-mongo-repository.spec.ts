@@ -37,13 +37,14 @@ describe('SurveyMongoRepository', () => {
   afterAll(async () => {
     await MongoHelper.disconnect()
   })
-
-  test('Should add a survey on success', async () => {
-    const sut = makeSut()
-    const data = makeFakeSurveyData()
-    await sut.add(data)
-    const account = await surveyCollection.findOne({ question: data.question })
-    expect(account.question).toBe(data.question)
-    expect(account.answers).toEqual(data.answers)
+  describe('add()', () => {
+    test('Should add a survey on success', async () => {
+      const sut = makeSut()
+      const data = makeFakeSurveyData()
+      await sut.add(data)
+      const account = await surveyCollection.findOne({ question: data.question })
+      expect(account.question).toBe(data.question)
+      expect(account.answers).toEqual(data.answers)
+    })
   })
 })
