@@ -66,4 +66,10 @@ describe('DbLoadSurveys usecases', () => {
     const promise = sut.load()
     await expect(promise).rejects.toThrow()
   })
+
+  test('Should return a list of Surveys on success', async () => {
+    const { sut } = makeSut()
+    const surveys = await sut.load()
+    expect(surveys).toEqual(makeFakeSurveys())
+  })
 })
