@@ -124,5 +124,27 @@ describe('Surveys Routes', () => {
         .set('x-access-token', accessToken)
         .expect(204)
     })
+
+    test('Should return 200 on load surveys with valid accessToken', async () => {
+      const id = await makeAccount()
+      const accessToken = await makeAccessToken(id)
+      await updateToken(id, accessToken)
+
+      await surveyCollection.insertMany([{
+        question: 'any_question',
+        answers: [{
+          image: 'any_image',
+          answer: 'any_answer'
+        }, {
+          answer: 'other_answer'
+        }],
+        date: new Date()
+      }])
+
+      await request(app)
+        .get('/api/v1/surveys')
+        .set('x-access-token', accessToken)
+        .expect(200)
+    })
   })
 })
