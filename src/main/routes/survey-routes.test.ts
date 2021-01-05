@@ -8,21 +8,16 @@ import env from '../config/env'
 let surveyCollection: Collection
 let accountCollection: Collection
 
-const makeAccount = async (role?: string): Promise<string> => {
+const makeAccessToken = async (role?: string): Promise<string> => {
   const { ops: [{ _id: id }] } = await accountCollection.insertOne({
     name: 'any_name',
     email: 'any_email@mail.com',
     password: '123',
     role
   })
-  return id
-}
 
-const makeAccessToken = async (id: string): Promise<string> => {
-  return sign({ id }, env.jwtSecret)
-}
+  const accessToken = sign({ id }, env.jwtSecret)
 
-const updateToken = async (id: string, accessToken: string): Promise<void> => {
   await accountCollection.updateOne({
     _id: id
   }, {
@@ -30,7 +25,19 @@ const updateToken = async (id: string, accessToken: string): Promise<void> => {
       accessToken
     }
   })
+
+  return accessToken
 }
+
+const makeFakeDataSurvey = (): any => ({
+  question: 'any_question',
+  answers: [{
+    image: 'any_image',
+    answer: 'any_answer'
+  }, {
+    answer: 'other_answer'
+  }]
+})
 
 describe('Surveys Routes', () => {
   const uriMongo: string = process.env.MONGO_URL
@@ -67,42 +74,21 @@ describe('Surveys Routes', () => {
     })
 
     test('Should return 204 on add survey with valid accessToken', async () => {
-      const id = await makeAccount('admin')
-      const accessToken = await makeAccessToken(id)
-      await updateToken(id, accessToken)
-
+      const accessToken = await makeAccessToken('admin')
       await request(app)
         .post('/api/v1/surveys')
         .set('x-access-token', accessToken)
-        .send({
-          question: 'any_question',
-          answers: [{
-            image: 'any_image',
-            answer: 'any_answer'
-          }, {
-            answer: 'other_answer'
-          }]
-        })
+        .send(makeFakeDataSurvey())
         .expect(204)
     })
 
     test('Should return 403 on add survey with invalid accessToken', async () => {
-      const id = await makeAccount('user')
-      const accessToken = await makeAccessToken(id)
-      await updateToken(id, accessToken)
+      const accessToken = await makeAccessToken()
 
       await request(app)
         .post('/api/v1/surveys')
         .set('x-access-token', accessToken)
-        .send({
-          question: 'any_question',
-          answers: [{
-            image: 'any_image',
-            answer: 'any_answer'
-          }, {
-            answer: 'other_answer'
-          }]
-        })
+        .send(makeFakeDataSurvey())
         .expect(403)
     })
   })
@@ -115,9 +101,7 @@ describe('Surveys Routes', () => {
     })
 
     test('Should return 204 on load empty list with valid accessToken', async () => {
-      const id = await makeAccount()
-      const accessToken = await makeAccessToken(id)
-      await updateToken(id, accessToken)
+      const accessToken = await makeAccessToken()
 
       await request(app)
         .get('/api/v1/surveys')
@@ -126,11 +110,9 @@ describe('Surveys Routes', () => {
     })
 
     test('Should return 200 on load surveys with valid accessToken', async () => {
-      const id = await makeAccount()
-      const accessToken = await makeAccessToken(id)
-      await updateToken(id, accessToken)
+      const accessToken = await makeAccessToken()
 
-      await surveyCollection.insertMany([{
+      await surveyCollection.insertOne({
         question: 'any_question',
         answers: [{
           image: 'any_image',
@@ -139,7 +121,7 @@ describe('Surveys Routes', () => {
           answer: 'other_answer'
         }],
         date: new Date()
-      }])
+      })
 
       await request(app)
         .get('/api/v1/surveys')
