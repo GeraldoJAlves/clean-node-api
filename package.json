@@ -35,8 +35,8 @@
   "scripts": {
     "start": "node ./dist/main/server.js",
     "debug": "nodemon -L --watch ./dist --inspect=0.0.0.0:9222 --nolazy ./dist/main/server.js",
-    "build": "rimraf dist && tsc",
-    "build:watch": "tsc -w",
+    "build": "rimraf dist && tsc -p tsconfig-build.json",
+    "build:watch": "tsc -w -p tsconfig-build.json",
     "up": "yarn build && docker-compose up",
     "test": "jest --passWithNoTests --silent --noStackTrace --runInBand --no-cache",
     "test:verbose": "jest --passWithNoTests --runInBand --no-cache",
@@ -51,9 +51,13 @@
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^3.6.3",
-    "validator": "^13.1.17"
+    "validator": "^13.1.17",
+    "module-alias": "^2.2.2"
   },
   "engines": {
     "node": "12.x"
+  },
+  "_moduleAliases": {
+    "@"      : "dist"
   }
 }
