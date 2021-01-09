@@ -96,4 +96,10 @@ describe('SurveyMongoRepository', () => {
       expect(survey).toEqual(surveyData)
     })
   })
+
+  test('Should return null', async () => {
+    const sut = makeSut()
+    const survey = await sut.loadById('any_id')
+    expect(survey).toBeNull()
+  })
 })
