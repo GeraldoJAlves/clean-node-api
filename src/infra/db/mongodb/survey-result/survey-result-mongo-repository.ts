@@ -5,7 +5,7 @@ import { MongoHelper } from '../helpers/mongo-helper'
 
 export class SurveyResultMongoRepository implements SaveSurveyResultRepository {
   async save (data: SaveSurveyResultModel): Promise<SurveyResultModel> {
-    const surveyCollection = await MongoHelper.getCollection('survey-result')
+    const surveyCollection = await MongoHelper.getCollection('surveyResults')
     const result = await surveyCollection.insertOne(data)
     return MongoHelper.map(result.ops[0])
   }

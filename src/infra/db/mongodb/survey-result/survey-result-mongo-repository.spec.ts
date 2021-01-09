@@ -24,7 +24,7 @@ describe('SurveyResultMongoRepository', () => {
   })
 
   beforeEach(async () => {
-    surveyResultCollection = await MongoHelper.getCollection('survey-result')
+    surveyResultCollection = await MongoHelper.getCollection('surveyResults')
     await surveyResultCollection.deleteMany({})
   })
 
