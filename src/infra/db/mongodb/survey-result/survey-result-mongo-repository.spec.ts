@@ -1,23 +1,42 @@
 import { Collection } from 'mongodb'
 import { MongoHelper } from '@/infra/db/mongodb/helpers/mongo-helper'
-import { SurveyResultModel } from '@/domain/models/survey-result'
 import { SurveyResultMongoRepository } from './survey-result-mongo-repository'
+import { SurveyModel } from '@/domain/models/survey'
+import { AccountModel } from '@/domain/models/account'
+
+let surveyResultCollection: Collection
+let surveyCollection: Collection
+let accountCollection: Collection
 
 const makeSut = (): SurveyResultMongoRepository => {
   return new SurveyResultMongoRepository()
 }
 
-const makeFakeSurveyResultData = (): SurveyResultModel => ({
-  id: 'any_id',
-  surveyId: 'any_survey_id',
-  accountId: 'any_account_id',
-  answer: 'any_answer',
-  date: new Date()
-})
+const makeSurvey = async (): Promise<SurveyModel> => {
+  const { ops } = await surveyCollection.insertOne({
+    question: 'any_question',
+    answers: [{
+      answer: 'any_answer',
+      image: 'any_image'
+    }, {
+      answer: 'other_answer'
+    }],
+    date: new Date()
+  })
+  return ops[0]
+}
+
+const makeAccount = async (): Promise<AccountModel> => {
+  const { ops } = await accountCollection.insertOne({
+    name: 'any_name',
+    email: 'any_email@mail.com',
+    password: 'any_hash'
+  })
+  return ops[0]
+}
 
 describe('SurveyResultMongoRepository', () => {
-  const uriMongo: string = process.env.MONGO_URL ?? ''
-  let surveyResultCollection: Collection
+  const uriMongo: string = process.env.MONGO_URL
 
   beforeAll(async () => {
     if (uriMongo) { await MongoHelper.connect(uriMongo) }
@@ -26,6 +45,10 @@ describe('SurveyResultMongoRepository', () => {
   beforeEach(async () => {
     surveyResultCollection = await MongoHelper.getCollection('surveyResults')
     await surveyResultCollection.deleteMany({})
+    surveyCollection = await MongoHelper.getCollection('surveys')
+    await surveyCollection.deleteMany({})
+    accountCollection = await MongoHelper.getCollection('accounts')
+    await accountCollection.deleteMany({})
   })
 
   afterAll(async () => {
@@ -33,13 +56,20 @@ describe('SurveyResultMongoRepository', () => {
   })
 
   describe('save()', () => {
-    test('Should add a survey-result on success', async () => {
+    test('Should add a survey result on success', async () => {
       const sut = makeSut()
-      const data = makeFakeSurveyResultData()
-      await sut.save(data)
-      const survey = await surveyResultCollection.findOne({ surveyId: data.surveyId })
-      expect(survey.answer).toBe(data.answer)
-      expect(survey.accountId).toBe(data.accountId)
+      const survey = await makeSurvey()
+      const account = await makeAccount()
+
+      const surveyResult = await sut.save({
+        accountId: account.id,
+        surveyId: survey.id,
+        answer: 'any_answer',
+        date: new Date()
+      })
+      expect(surveyResult).toBeTruthy()
+      expect(surveyResult.id).toBeTruthy()
+      expect(surveyResult.answer).toBe(survey.answers[0].answer)
     })
   })
 })
