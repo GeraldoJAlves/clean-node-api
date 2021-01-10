@@ -90,10 +90,10 @@ describe('SurveyMongoRepository', () => {
         }],
         date: new Date()
       }
-      const { ops: [{ _id }] } = await surveyCollection.insertOne(surveyData)
+      const { ops: [surveyMongo] } = await surveyCollection.insertOne(surveyData)
       const sut = makeSut()
-      const survey = await sut.loadById(_id)
-      expect(survey).toEqual(surveyData)
+      const survey = await sut.loadById(surveyMongo._id)
+      expect(survey).toEqual(MongoHelper.map(surveyMongo))
     })
   })
 
