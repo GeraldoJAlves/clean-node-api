@@ -1,0 +1,6 @@
+export { SaveSurveyResult } from '@/domain/usecases/survey-result/save-survey-result'
+export { LoadSurveyById } from '@/domain/usecases/survey/load-survey-by-id'
+export { SurveyResultModel } from '@/domain/models/survey-result'
+export { SaveSurveyResultModel } from '@/domain/usecases/survey-result/save-survey-result'
+export { Controller, HttpRequest, HttpResponse } from '@/presentation/protocols'
+export { SurveyModel } from '@/domain/models/survey'
