@@ -1,4 +1,4 @@
-import { DbAuthentication } from '@/data/usescases/authentication/db-authentication'
+import { DbAuthentication } from '@/data/usescases/account/authentication/db-authentication'
 import { BcryptAdapter } from '@/infra/criptography/bcrypt-adapter/bcrypt-adapter'
 import { JwtAdapter } from '@/infra/criptography/jwt-adapter/jwt-adapter'
 import { AccountMongoRepository } from '@/infra/db/mongodb/account/account-mongo-repository'
