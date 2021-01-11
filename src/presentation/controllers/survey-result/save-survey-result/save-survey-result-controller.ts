@@ -23,7 +23,7 @@ export class SaveSurveyResultController implements Controller {
       }
       return noContent()
     } catch (err) {
-      serverError(err)
+      return serverError(err)
     }
   }
 }
