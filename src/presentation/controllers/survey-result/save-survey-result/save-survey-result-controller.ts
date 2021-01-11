@@ -5,7 +5,8 @@ import {
   HttpRequest,
   HttpResponse
 } from './save-survey-result-controller-protocols'
-import { badRequest, noContent, serverError } from '@/presentation/helpers/http/http-helper'
+import { forbidden, noContent, serverError } from '@/presentation/helpers/http/http-helper'
+import { InvalidParamError } from '@/presentation/errors'
 
 export class SaveSurveyResultController implements Controller {
   constructor (
@@ -18,7 +19,7 @@ export class SaveSurveyResultController implements Controller {
       const { params } = httpRequest
       const survey = await this.loadSurveyById.loadById(params.surveyId)
       if (!survey) {
-        return badRequest(new Error('surveyId not found'))
+        return forbidden(new InvalidParamError('surveyId'))
       }
       return noContent()
     } catch (err) {
