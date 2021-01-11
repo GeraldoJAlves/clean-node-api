@@ -71,7 +71,8 @@ const fakeRequest = (): HttpRequest => ({
   },
   body: {
     answer: 'any_answer'
-  }
+  },
+  accountId: 'any_account_id'
 })
 
 describe('SaveSurveyResult Controller', () => {
@@ -115,5 +116,18 @@ describe('SaveSurveyResult Controller', () => {
     }
     const response = await sut.handle(request)
     expect(response).toEqual(forbidden(new InvalidParamError('answer')))
+  })
+
+  test('Should call SaveSurveyResult with correct value', async () => {
+    const { sut, saveSurveyResultStub } = makeSut()
+    const saveSpy = jest.spyOn(saveSurveyResultStub, 'save')
+    const request = fakeRequest()
+    await sut.handle(request)
+    expect(saveSpy).toHaveBeenCalledWith({
+      surveyId: request.params.surveyId,
+      accountId: request.accountId,
+      answer: request.body.answer,
+      date: new Date()
+    })
   })
 })
