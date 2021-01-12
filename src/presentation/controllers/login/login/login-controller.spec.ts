@@ -1,4 +1,4 @@
-
+import { throwError } from '@/domain/test'
 import { LoginController } from './login-controller'
 import { Authentication, HttpRequest, Validation } from './login-controller-protocols'
 import { badRequest, ok, serverError, unauthorized } from '@/presentation/helpers/http/http-helper'
@@ -64,7 +64,7 @@ describe('Login Controller', () => {
 
   test('Should return 500 if Authentication throws', async () => {
     const { sut, authenticationStub } = makeSut()
-    jest.spyOn(authenticationStub, 'auth').mockReturnValueOnce(Promise.reject(new Error()))
+    jest.spyOn(authenticationStub, 'auth').mockImplementationOnce(throwError)
     const response = await sut.handle(makeFakeRequest())
     expect(response).toEqual(serverError(new Error()))
   })

@@ -1,3 +1,4 @@
+import { throwError } from '@/domain/test'
 import {
   SaveSurveyResult,
   LoadSurveyById,
@@ -102,7 +103,7 @@ describe('SaveSurveyResult Controller', () => {
 
   test('Should return 500 if LoadSurveyById throws', async () => {
     const { sut, loadSurveyByIdStub } = makeSut()
-    jest.spyOn(loadSurveyByIdStub, 'loadById').mockReturnValueOnce(Promise.reject(new Error()))
+    jest.spyOn(loadSurveyByIdStub, 'loadById').mockImplementationOnce(throwError)
     const request = fakeRequest()
     const response = await sut.handle(request)
     expect(response).toEqual(serverError(new Error()))
@@ -133,7 +134,7 @@ describe('SaveSurveyResult Controller', () => {
 
   test('Should return 500 if SaveSurveyResult throws', async () => {
     const { sut, saveSurveyResultStub } = makeSut()
-    jest.spyOn(saveSurveyResultStub, 'save').mockReturnValueOnce(Promise.reject(new Error()))
+    jest.spyOn(saveSurveyResultStub, 'save').mockImplementationOnce(throwError)
     const request = fakeRequest()
     const response = await sut.handle(request)
     expect(response).toEqual(serverError(new Error()))

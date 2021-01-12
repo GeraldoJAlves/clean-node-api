@@ -1,3 +1,4 @@
+import { throwError } from '@/domain/test'
 import { LoadSurveysController } from './load-surveys-controller'
 import { LoadSurveys, SurveyModel } from './load-surveys-controller-protocols'
 import MockDate from 'mockdate'
@@ -78,7 +79,7 @@ describe('LoadSurveys Controller', () => {
 
   test('Should return 500 on fails', async () => {
     const { sut, loadSurveysStub } = makeSut()
-    jest.spyOn(loadSurveysStub, 'load').mockReturnValueOnce(Promise.reject(new Error()))
+    jest.spyOn(loadSurveysStub, 'load').mockImplementationOnce(throwError)
     const response = await sut.handle({})
     expect(response).toEqual(serverError(new Error()))
   })
