@@ -101,6 +101,12 @@ describe('SaveSurveyResult Controller', () => {
     expect(response).toEqual(serverError(new Error()))
   })
 
+  test('Should return 403 if answer is not provided', async () => {
+    const { sut } = makeSut()
+    const response = await sut.handle({})
+    expect(response).toEqual(forbidden(new InvalidParamError('answer')))
+  })
+
   test('Should return 200 on success', async () => {
     const { sut } = makeSut()
     const request = mockRequest()
