@@ -1,28 +1,15 @@
 import { Collection } from 'mongodb'
-import { AddSurveyParams } from '@/domain/usecases/survey/add-survey'
 import { MongoHelper } from '@/infra/db/mongodb/helpers/mongo-helper'
 import { SurveyMongoRepository } from './survey-mongo-repository'
+import { mockAddSurveyParams } from '@/domain/test'
 
 const makeSut = (): SurveyMongoRepository => {
   const sut = new SurveyMongoRepository()
   return sut
 }
 
-const makeFakeSurveyData = (): AddSurveyParams => {
-  return {
-    question: 'any_question',
-    answers: [{
-      answer: 'any_answer',
-      image: 'any_image'
-    }, {
-      answer: 'other_answer'
-    }],
-    date: new Date()
-  }
-}
-
 describe('SurveyMongoRepository', () => {
-  const uriMongo: string = process.env.MONGO_URL ?? ''
+  const uriMongo: string = process.env.MONGO_URL
   let surveyCollection: Collection
 
   beforeAll(async () => {
@@ -41,7 +28,7 @@ describe('SurveyMongoRepository', () => {
   describe('add()', () => {
     test('Should add a survey on success', async () => {
       const sut = makeSut()
-      const data = makeFakeSurveyData()
+      const data = mockAddSurveyParams()
       await sut.add(data)
       const account = await surveyCollection.findOne({ question: data.question })
       expect(account.question).toBe(data.question)

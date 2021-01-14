@@ -4,6 +4,7 @@ import request from 'supertest'
 import app from '@/main/config/app'
 import { sign } from 'jsonwebtoken'
 import env from '../config/env'
+import { mockSurveyModel } from '@/domain/test'
 
 let surveyCollection: Collection
 let accountCollection: Collection
@@ -29,17 +30,6 @@ const makeAccessToken = async (role?: string): Promise<string> => {
 
   return accessToken
 }
-
-const makeFakeSurvey = (): any => ({
-  question: 'any_question',
-  answers: [{
-    image: 'any_image',
-    answer: 'any_answer'
-  }, {
-    answer: 'other_answer'
-  }],
-  date: new Date()
-})
 
 describe('SurveyResults Routes', () => {
   const uriMongo: string = process.env.MONGO_URL
@@ -73,7 +63,7 @@ describe('SurveyResults Routes', () => {
 
     test('Should return 200 on save survey result with accessToken', async () => {
       const accessToken = await makeAccessToken()
-      const res = await surveyCollection.insertOne(makeFakeSurvey())
+      const res = await surveyCollection.insertOne(mockSurveyModel())
       const id: string = res.ops[0]._id
       await request(app)
         .put(`/api/v1/surveys/${id}/results`)

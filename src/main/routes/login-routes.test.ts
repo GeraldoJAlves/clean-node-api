@@ -5,7 +5,7 @@ import { Collection } from 'mongodb'
 import { hash } from 'bcrypt'
 
 describe('Login Routes', () => {
-  const uriMongo: string = process.env.MONGO_URL ?? ''
+  const uriMongo: string = process.env.MONGO_URL
   let accountCollection: Collection
 
   beforeAll(async () => {

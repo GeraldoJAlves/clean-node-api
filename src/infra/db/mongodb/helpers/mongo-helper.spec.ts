@@ -1,6 +1,6 @@
 import { MongoHelper as sut } from './mongo-helper'
 
-const uriMongo = process.env.MONGO_URL ?? ''
+const uriMongo = process.env.MONGO_URL
 
 describe('Mongo Helper', () => {
   beforeAll(async () => {

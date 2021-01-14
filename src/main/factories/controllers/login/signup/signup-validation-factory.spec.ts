@@ -3,7 +3,7 @@ import {
   EmailValidation,
   RequiredFieldValidation,
   ValidationComposite
-} from '@/validation/Validators'
+} from '@/validation/validators'
 import { EmailValidator } from '@/validation/protocols/email-validator'
 import { Validation } from '@/presentation/protocols'
 import { makeSignUpValidation } from './signup-validation-factory'

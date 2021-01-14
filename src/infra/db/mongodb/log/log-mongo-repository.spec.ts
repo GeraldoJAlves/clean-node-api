@@ -7,7 +7,7 @@ const makeSut = (): LogMongoRepository => {
 }
 
 describe('Account Mongo Repository', () => {
-  const uriMongo: string = process.env.MONGO_URL ?? ''
+  const uriMongo: string = process.env.MONGO_URL
   let errorCollection: Collection
 
   beforeAll(async () => {
