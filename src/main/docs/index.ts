@@ -2,13 +2,18 @@ import {
   badRequest,
   serverError,
   unauthorized,
-  notFound
+  notFound,
+  forbidden
 } from './components'
-import { loginPath } from './paths/login-path'
+import { loginPath, surveyPath } from './paths'
 import {
   accountSchema,
+  apiKeyAuthSchema,
   errorSchema,
-  loginParamsSchema
+  loginParamsSchema,
+  surveyAnswerSchema,
+  surveySchema,
+  surveysSchema
 } from './schemas'
 
 export default {
@@ -27,19 +32,29 @@ export default {
   }],
   tags: [{
     name: 'Login'
+  }, {
+    name: 'Enquete'
   }],
   paths: {
-    '/login': loginPath
+    '/login': loginPath,
+    '/surveys': surveyPath
   },
   schemas: {
     account: accountSchema,
     loginParams: loginParamsSchema,
-    error: errorSchema
+    error: errorSchema,
+    survey: surveySchema,
+    surveys: surveysSchema,
+    surveyAnswer: surveyAnswerSchema
   },
   components: {
+    securitySchemes: {
+      apiKeyAuth: apiKeyAuthSchema
+    },
     badRequest,
     unauthorized,
     serverError,
-    notFound
+    notFound,
+    forbidden
   }
 }
