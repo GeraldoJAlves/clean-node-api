@@ -1,6 +1,7 @@
 export { accountSchema } from './account-schema'
 export { errorSchema } from './error-schema'
 export { loginParamsSchema } from './login-params-schema'
+export { signUpParamsSchema } from './signup-params-schema'
 export { surveySchema } from './survey-schema'
 export { surveysSchema } from './surveys-schema'
 export { surveyAnswerSchema } from './survey-answer-schema'
