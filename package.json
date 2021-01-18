@@ -3,7 +3,7 @@
   "version": "2.2.0",
   "main": "index.js",
   "author": "GeraldoJAlves <junior.alves.2007@gmail.com>",
-  "license": "MIT",
+  "license": "GPL-3.0-or-later",
   "devDependencies": {
     "@shelf/jest-mongodb": "^1.2.3",
     "@types/bcrypt": "^3.0.0",
