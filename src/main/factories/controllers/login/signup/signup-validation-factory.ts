@@ -3,7 +3,7 @@ import {
   EmailValidation,
   RequiredFieldValidation,
   ValidationComposite
-} from '@/validation/validators'
+} from '@/validation/validators/'
 import { Validation } from '@/presentation/protocols'
 import { EmailValidatorAdapter } from '@/infra/validators/email-validator-adapter'
 
