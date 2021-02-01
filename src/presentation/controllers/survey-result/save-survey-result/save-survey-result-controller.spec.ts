@@ -7,8 +7,8 @@ import {
 import { SaveSurveyResultController } from './save-survey-result-controller'
 import { forbidden, ok, serverError } from '@/presentation/helpers/http/http-helper'
 import { InvalidParamError } from '@/presentation/errors'
-import MockDate from 'mockdate'
 import { mockLoadSurveyById, mockSaveSurveyResult } from '@/presentation/test'
+import MockDate from 'mockdate'
 
 type SutTypes = {
   sut: SaveSurveyResultController
