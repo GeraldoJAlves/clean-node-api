@@ -61,4 +61,12 @@ describe('LoadSurveyResult Controller', () => {
     const response = await sut.handle(request)
     expect(response).toEqual(serverError(new Error()))
   })
+
+  test('Should call LoadSurveyResult with correct id', async () => {
+    const { sut, loadSurveyResultStub } = makeSut()
+    const loadSpy = jest.spyOn(loadSurveyResultStub, 'load')
+    const request = mockRequest()
+    await sut.handle(request)
+    expect(loadSpy).toHaveBeenCalledWith('any_survey_id')
+  })
 })
