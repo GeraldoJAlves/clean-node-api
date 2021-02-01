@@ -5,9 +5,10 @@ export const surveyResultPath = {
     }],
     tags: ['Enquete'],
     summuary: 'API para criar a resposta de uma enquete',
+    description: 'Essa rota só pode ser executada por **usuários autenticados**',
     parameters: [{
       in: 'path',
-      name: 'suveryId',
+      name: 'surveyId',
       schema: {
         type: 'string'
       },
@@ -22,6 +23,43 @@ export const surveyResultPath = {
         }
       }
     },
+    responses: {
+      200: {
+        description: 'Sucesso',
+        content: {
+          'application/json': {
+            schema: {
+              $ref: '#/schemas/surveyResult'
+            }
+          }
+        }
+      },
+      403: {
+        $ref: '#/components/forbidden'
+      },
+      404: {
+        $ref: '#/components/notFound'
+      },
+      500: {
+        $ref: '#/components/serverError'
+      }
+    }
+  },
+  get: {
+    security: [{
+      apiKeyAuth: []
+    }],
+    tags: ['Enquete'],
+    summuary: 'API para consultar o resultado de uma enquete',
+    description: 'Essa rota só pode ser executada por **usuários autenticados**',
+    parameters: [{
+      in: 'path',
+      name: 'surveyId',
+      schema: {
+        type: 'string'
+      },
+      required: true
+    }],
     responses: {
       200: {
         description: 'Sucesso',
