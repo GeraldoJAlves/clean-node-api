@@ -1,5 +1,7 @@
 import { LoadSurveyResultController } from './load-survey-result-controller'
 import { HttpRequest, LoadSurveyById, LoadSurveyResult } from './load-survey-result-controller-protocols'
+import { forbidden } from '@/presentation/helpers/http/http-helper'
+import { InvalidParamError } from '@/presentation/errors'
 import { mockLoadSurveyById, mockLoadSurveyResult } from '@/presentation/test'
 import MockDate from 'mockdate'
 
@@ -41,5 +43,13 @@ describe('LoadSurveyResult Controller', () => {
     const request = mockRequest()
     await sut.handle(request)
     expect(loadSpy).toHaveBeenCalledWith('any_survey_id')
+  })
+
+  test('Should return 403 if LoadSurveyById returns null', async () => {
+    const { sut, loadSurveyByIdStub } = makeSut()
+    jest.spyOn(loadSurveyByIdStub, 'loadById').mockReturnValueOnce(null)
+    const request = mockRequest()
+    const response = await sut.handle(request)
+    expect(response).toEqual(forbidden(new InvalidParamError('surveyId')))
   })
 })
