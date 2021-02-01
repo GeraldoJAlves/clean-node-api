@@ -1,5 +1,4 @@
-import { LoadSurveyResultRepository } from '@/data/protocols/db/survey-result/load-survey-result-respository'
-import { LoadSurveyResult, SurveyResultModel } from './db-load-survey-result-protocols'
+import { LoadSurveyResult, SurveyResultModel, LoadSurveyResultRepository } from './db-load-survey-result-protocols'
 
 export class DbLoadSaveSurveyResult implements LoadSurveyResult {
   constructor (private readonly loadSurveyResultRepository: LoadSurveyResultRepository) {}
