@@ -40,10 +40,10 @@ describe('LoadSurveyResult Controller', () => {
 
   test('Should call LoadSurveyById with correct id', async () => {
     const { sut, loadSurveyByIdStub } = makeSut()
-    const loadSpy = jest.spyOn(loadSurveyByIdStub, 'loadById')
+    const loadByIdSpy = jest.spyOn(loadSurveyByIdStub, 'loadById')
     const request = mockRequest()
     await sut.handle(request)
-    expect(loadSpy).toHaveBeenCalledWith('any_survey_id')
+    expect(loadByIdSpy).toHaveBeenCalledWith('any_survey_id')
   })
 
   test('Should return 403 if LoadSurveyById returns null', async () => {
