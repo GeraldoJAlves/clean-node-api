@@ -5,29 +5,30 @@ import { SurveyModel } from '@/domain/models/survey'
 import { mockSurveyModel, mockSurveysModels } from '@/domain/test'
 import { LoadSurveysRepository } from '@/data/protocols/db/survey/load-surveys-repository'
 
-export const mockAddSurveyRepository = (): AddSurveyRepository => {
-  class AddSurveyRepositoryStub implements AddSurveyRepository {
-    async add (data: AddSurveyParams): Promise<void> {
-      return await Promise.resolve()
-    }
+export class AddSurveyRepositorySpy implements AddSurveyRepository {
+  addSurveyParams: AddSurveyParams
+
+  async add (data: AddSurveyParams): Promise<void> {
+    this.addSurveyParams = data
+    return await Promise.resolve()
   }
-  return new AddSurveyRepositoryStub()
 }
 
-export const mockLoadSurveyByIdRepository = (): LoadSurveyByIdRepository => {
-  class LoadSurveyByIdRepositoryStub implements LoadSurveyByIdRepository {
-    async loadById (id: string): Promise<SurveyModel> {
-      return mockSurveyModel()
-    }
+export class LoadSurveyByIdRepositorySpy implements LoadSurveyByIdRepository {
+  surveyId: string
+  surveyModel = mockSurveyModel()
+
+  async loadById (id: string): Promise<SurveyModel> {
+    this.surveyId = id
+    return await Promise.resolve(this.surveyModel)
   }
-  return new LoadSurveyByIdRepositoryStub()
 }
 
-export const mockLoadSurveysRepository = (): LoadSurveysRepository => {
-  class LoadSurveysRepositoryStub implements LoadSurveysRepository {
-    async loadAll (): Promise<SurveyModel[]> {
-      return mockSurveysModels()
-    }
+export class LoadSurveysRepositorySpy implements LoadSurveysRepository {
+  callsCount = 0
+  surveysModel = mockSurveysModels()
+  async loadAll (): Promise<SurveyModel[]> {
+    this.callsCount++
+    return await Promise.resolve(this.surveysModel)
   }
-  return new LoadSurveysRepositoryStub()
 }

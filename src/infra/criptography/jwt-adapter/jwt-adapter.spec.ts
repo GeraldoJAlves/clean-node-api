@@ -14,9 +14,7 @@ const makeSut = (): JwtAdapter => {
   return new JwtAdapter('secret_key')
 }
 
-const makeFakeHash = (): object => ({
-  id: 'any_value'
-})
+const makeFakeHash = (): string => 'any_value'
 
 describe('Jwt Adapter', () => {
   describe('verify()', () => {
@@ -46,7 +44,7 @@ describe('Jwt Adapter', () => {
       const hashSpy = jest.spyOn(jwt, 'sign')
       const sut = makeSut()
       await sut.encrypt(makeFakeHash())
-      expect(hashSpy).toHaveBeenCalledWith(makeFakeHash(), 'secret_key')
+      expect(hashSpy).toHaveBeenCalledWith({ id: makeFakeHash() }, 'secret_key')
     })
 
     test('Should return a token when jwt.sign succeds ', async () => {

@@ -1,2 +1,2 @@
-export { mockEmailValidator } from './mock-email-validator'
-export { mockValidation } from './mock-validation'
+export { EmailValidatorSpy } from './mock-email-validator'
+export { ValidationSpy } from './mock-validation'

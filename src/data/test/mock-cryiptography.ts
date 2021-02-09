@@ -1,38 +1,40 @@
 import { Decrypter, Encrypter, HashComparer, Hasher } from '@/data/protocols/criptography'
+import faker from 'faker'
+export class HasherSpy implements Hasher {
+  digest = faker.random.uuid()
+  plaintext: string
 
-export const mockHasher = (): Hasher => {
-  class HasherStub implements Hasher {
-    async hash (value: string): Promise<string> {
-      return await Promise.resolve('hashed_password')
-    }
+  async hash (plaintext: string): Promise<string> {
+    this.plaintext = plaintext
+    return await Promise.resolve(this.digest)
   }
-  return new HasherStub()
 }
 
-export const mockDecrypter = (): Decrypter => {
-  class DecrypterStub implements Decrypter {
-    async decrypt (value: string): Promise<string> {
-      return 'any_value'
-    }
-  }
+export class DecrypterSpy implements Decrypter {
+  digest = faker.internet.password()
+  ciphertext: string
 
-  return new DecrypterStub()
+  async decrypt (ciphertext: string): Promise<string> {
+    this.ciphertext = ciphertext
+    return await Promise.resolve(this.digest)
+  }
 }
+export class EncrypterSpy implements Encrypter {
+  ciphertext = faker.random.uuid()
+  plaintext: string | object | Buffer
 
-export const mockEncrypter = (): Encrypter => {
-  class EncrypterStub implements Encrypter {
-    async encrypt (value: string | object | Buffer): Promise<string> {
-      return await Promise.resolve('any_token')
-    }
+  async encrypt (plaintext: string | object | Buffer): Promise<string> {
+    this.plaintext = plaintext
+    return await Promise.resolve(this.ciphertext)
   }
-  return new EncrypterStub()
 }
-
-export const mockHashComparer = (): HashComparer => {
-  class HashComparerStub implements HashComparer {
-    async compare (value: string, hash: string): Promise<boolean> {
-      return await Promise.resolve(true)
-    }
+export class HashComparerSpy implements HashComparer {
+  plaintext: string
+  digest: string
+  isValid = true
+  async compare (plaintext: string, digest: string): Promise<boolean> {
+    this.plaintext = plaintext
+    this.digest = digest
+    return await Promise.resolve(this.isValid)
   }
-  return new HashComparerStub()
 }

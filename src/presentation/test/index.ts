@@ -1,3 +1,3 @@
-export { mockAddSurvey, mockLoadSurveys, mockLoadSurveyById } from './mock-survey'
-export { mockAddAccount, mockAuthentication, mockLoadAccountByToken } from './mock-account'
-export { mockSaveSurveyResult, mockLoadSurveyResult } from './mock-survey-result'
+export { AddSurveySpy, LoadSurveysSpy, LoadSurveyByIdSpy } from './mock-survey'
+export { AddAccountSpy, AuthenticationSpy, LoadAccountByTokenSpy } from './mock-account'
+export { SaveSurveyResultSpy, LoadSurveyResultSpy } from './mock-survey-result'
